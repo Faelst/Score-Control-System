@@ -12,7 +12,7 @@
     height: 70px;
     max-width:70px;
     max-height: 70px;
-    border: 1px solid #ef4a01;
+    border: 3px solid #a19f9e;
 }
 
 .profile-header {
@@ -39,7 +39,7 @@
     height: 130px;
     max-width: 130px;
     max-height: 130px;
-    border: 2px solid #ef4a01;
+    border: 3px solid #a19f9e;
 }
 
 .houver-img:hover .img-hover{
@@ -66,7 +66,7 @@
   .text {
     text-decoration: underline;
     font-weight: bold;
-    color: #ef4a01;
+    color: #574c47;
     font-size: 25px;
     padding: 16px 32px;
   }
