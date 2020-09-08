@@ -115,9 +115,7 @@ if (empty($_SESSION['validaLogin'])) {
           </div>
         </div>
       </div>
-
     </div>
-
 
     <!-- Modal de configurações do usuario -->
 
@@ -246,7 +244,7 @@ if (empty($_SESSION['validaLogin'])) {
 
     </div>
 
-    <div align="center" class="mt-1">
+    <div align="center" class="mt-2">
       <p style="color:white">&copy; 2020 Rafael Silverio</p>
     </div>
   </div>
