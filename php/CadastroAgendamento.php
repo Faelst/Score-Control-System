@@ -11,6 +11,70 @@ switch (intval($_GET['switchFlag'])) {
     case 2:
         verificarDuplicidade();
         break;
+    case 3:
+        getCities();
+        break;
+    case 4:
+        servicesTypes();
+        break;
+    case 5:
+        assignmentTypeLevels($_GET['assignmentTypeId']);
+        break;
+}
+
+function assignmentTypeLevels($assignmentTypeId){
+    include_once('../php/conexao.php');
+
+    $sql = "select 
+                dl.id as id,
+                dl.title as title,
+                dl.score as score 
+            from procedures_levels pl 
+                inner join difficult_levels dl 
+                    on dl.id = pl.difficult_level_id 
+                inner join procedimento_agendamento pa 
+                    on pa.id_procedimento_agendamento = pl.procedimento_agendamento_id 
+            where pa.id_procedimento_agendamento = $assignmentTypeId";
+
+    $qryLista = mysqli_query($conn, $sql);
+
+    while ($resultado = mysqli_fetch_assoc($qryLista)) {
+        $vetor[] = array_map('utf8_encode', $resultado);
+    }
+    //Passando vetor em forma de json
+    echo json_encode($vetor);
+}
+
+function servicesTypes()
+{
+    include_once('../php/conexao.php');
+
+    $sql = "SELECT id_procedimento_agendamento , nomeProcedimento FROM procedimento_agendamento";
+
+    $qryLista = mysqli_query($conn, $sql);
+
+    while ($resultado = mysqli_fetch_assoc($qryLista)) {
+        $vetor[] = array_map('utf8_encode', $resultado);
+    }
+    
+    //Passando vetor em forma de json
+    echo json_encode($vetor);
+}
+
+function getCities()
+{
+    include_once('../php/conexao.php');
+
+    $sql = "SELECT id_cidade, nome_cidade FROM cidade ";
+
+    $qryLista = mysqli_query($conn, $sql);
+
+    while ($resultado = mysqli_fetch_assoc($qryLista)) {
+        $vetor[] = array_map('utf8_encode',$resultado);
+    }
+    
+    //Passando vetor em forma de json
+    echo json_encode($vetor);
 }
 
 function verificarDuplicidade()
@@ -18,10 +82,9 @@ function verificarDuplicidade()
 
     //verificação se o campos estão vazios
     if (isset($_GET['nOrdem']) && strlen($_GET['nOrdem']) <= 3) {
-        
+
         echo '0';
         die();
-
     } else {
 
         include_once('../php/conexao.php');
@@ -112,13 +175,13 @@ function cadastrarOrdem()
 
     if ($_GET['tipoOrdenServico'] == 'Duplado') {
         $motivoPontoExtra = "'" . utf8_decode($_GET['motivoPontoExtra']) . "'";
-        
+
         if (isset($_GET['nomeTenicoDuplado'])) {
             $nomeTenicoDuplado = $_GET['nomeTenicoDuplado'];
-            if(floatval($_GET['pontuacaoExtra']) > 0){
+            if (floatval($_GET['pontuacaoExtra']) > 0) {
                 $pontoExtra = ($_GET['pontuacaoExtra']) / 2;
                 $flag = cadastrarSegundoTecnicoDuplado($nomeTenicoDuplado, $cidade, $tipoOrdenServico, $numeroOrdem, $dataExecucao, $dataFechamento, $pontoExtra, $motivoPontoExtra, $observacao, $conn);
-            }else {
+            } else {
                 echo 'Informe o Ponto Corretamente';
                 die;
             }

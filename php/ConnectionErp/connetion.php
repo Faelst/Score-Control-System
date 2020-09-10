@@ -1,16 +1,11 @@
 <?php
+    include('./key.php');
+    $db = new connectioDbVoalle;
 
-use function PHPSTORM_META\type;
-
-// $servidor="177.126.240.61:3306";
-//     $usuario="NewVersion";
-//     $senha="FuARlWRUBGTRgJZw";
-//     $dbname="controle_ativacao";
-
-$servidor="localhost:3306";
-    $usuario="root";
-    $senha="";
-    $dbname="controleativacao";
+    $servidor= $db->getServer();
+    $usuario= $db->getUser();
+    $senha = $db->getPass();
+    $dbname= $db->getDbName();
 
     try {
         //code...

@@ -1,5 +1,6 @@
 <!-- css -->
 <link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/RegisterForm/styles.css">
 <!-- css -->
 
 <!-- jquery UI css -->
@@ -9,7 +10,7 @@
 <script src="js/Comportamentos.js"></script>
 
 <div class="container">
-    <div class="m-3 p-2 rounded" style="background-color: rgba(61, 61, 61, 0.63);">
+    <div class="m-3 mt-5 p-3 pt-4 rounded container-form">
         <div class="d-flex justify-content-between border-bottom text-light ">
             <div class="my-1 mx-3">
                 <h3 class="estilo">Controle de Ordens de Serviço</h3>
@@ -22,7 +23,7 @@
                     <div class="form-group">
                         <label class="text-light" for="exampleFormControlInput1">Numero da Ordem</label>
                         <input type="nOrdem" class="form-control bg-transparent text-light border-bottom"
-                            id="nOrdemServico" placeholder="">
+                            id="serviceNumber" name="serviceNumber" placeholder="">
                     </div>
                 </div>
             </div>
@@ -31,9 +32,9 @@
                 <div class="col-sm-12 col-md-6 col-lg-5">
                     <div class="form-group">
                         <label class='text-light' for="exampleFormControlSelect1">Cidade</label>
-                        <select class="form-control bg-transparent text-light border-bottom"
-                            id="exampleFormControlSelect1">
-                            <option>1</option>
+                        <select class="custom-select bg-dark bg-transparent text-light border-bottom" id="serviceCity"
+                            name="serviceCity">
+                            <option class="bg-dark text-light">Selecione</option>
                         </select>
                     </div>
                 </div>
@@ -41,46 +42,101 @@
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="form-group">
                         <label class="text-light" for="exampleFormControlInput1">Data de Execução</label>
-                        <input type="dataExecucao" class="form-control bg-transparent text-light" id="dataAbertura"
-                            placeholder="">
+                        <input type="dataExecucao" class="form-control bg-transparent text-light" id="issueDate"
+                            name="issueDate" placeholder="DD/MM/YYYY" placeholder="">
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
+            <div id="addTechnicalLink" class="row">
+
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <div class="form-group ">
+                        <label class="text-light" >ID</label>
+                        <input type="text" class="form-control text-light bg-transparent" id='technicianName'
+                            name='technicialId'>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-10">
+                    <div class="form-group ">
                         <label class="text-light" for="exampleFormControlInput1">Tecnico</label>
-                        <input type="text" class="form-control text-light bg-transparent"
-                            id='nomeTenico' aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control text-light bg-transparent" id='technicianName'
+                            name='technicianId' aria-label="Username" aria-describedby="basic-addon1">
+                        <div class="d-flex flex-row">
+                            <a class="mt-1" href="#" id='addTechnical'>
+                                <i class="fas fa-plus"></i>
+                                Tecnico Adicional
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- MODAL DE TECNICO ADICIONAL -->
+            <div class="modal fade" id="addTechnicalModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Tecnico adicional</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body p-0 table-responsive">
+                            <table class="table table-sm m-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="align-middle">Nome do Tecnico</th>
+                                        <th scope="col" class="align-middle">Tipo de Acompanhamento</th>
+                                        <th scope="col" class="align-middle">
+                                            <a href="">
+                                                <i class="fas fa-plus-circle fa-lg"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-primary">Salvar
+                                Alterações</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- MODAL DE TECNICO ADICIONAL -->
+
 
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-6">
                     <div class="form-group">
-                        <label class='text-light' for="exampleFormControlSelect1">Tipo de Serviço</label>
+                        <label class='text-light'>Tipo de Serviço</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <button class="btn btn-outline-secondary text-light dropdown-toggle bg-transparent"
-                                    type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selecionar</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" value='1.00'>Instalação</a>
+                                    type="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Selecionar</button>
+                                <div id="assignmentTypes" class="dropdown-menu bg-dark">
+                                    <!-- Opções do tipo de solicitações -->
                                 </div>
                             </div>
                             <input type="text" class="form-control text-light bg-transparent rounded-right"
-                                id="tipoOrdem" aria-label="Text input with dropdown button"
+                                id="assignmentType" name="assignmentType" aria-label="Text input with dropdown button"
                                 placeholder="Selecione o Tipo de O.S" disabled>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-sm-8 col-md-8 col-lg-4">
                     <div class="form-group">
-                        <label class='text-light' for="exampleFormControlSelect1">Niveis</label>
-                        <select class="form-control bg-transparent text-light border-bottom"
-                            id="niveisOs">
+                        <label class='text-light'>Niveis</label>
+                        <select class="form-control bg-transparent text-light border-bottom" name="levelsAssigment"
+                            id="levelsAssigment">
                             <option>Selecionar</option>
                         </select>
                     </div>
@@ -88,9 +144,9 @@
 
                 <div class="col">
                     <div class="form-group">
-                        <label class='text-light' for="exampleFormControlSelect1">Pontuação</label>
+                        <label class='text-light'>Pontuação</label>
                         <input type="text" class="form-control text-light bg-transparent rounded-right"
-                                id="pontuacaoTotal" disabled>
+                            name="scoreAmount" id="scoreAmount" disabled>
                     </div>
                 </div>
             </div>
@@ -99,8 +155,8 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="" class="text-light">Observações*</label>
-                        <textarea class="form-control rounded bg-transparent" id="txtAreaObservação" id="txtObs" value=""
-                        style="font-size: 14px;color: white" rows="2"></textarea>
+                        <textarea class="form-control rounded bg-transparent" id="descriotionService" value=""
+                            name="descriotionService" style="font-size: 14px;color: white" rows="2"></textarea>
                     </div>
                 </div>
             </div>
@@ -108,12 +164,11 @@
             <div class="d-flex justify-content-end">
                 <div class="row">
                     <div class="col">
-                        <button type="button" class="btn btn-warning" id="btnCadastrar"
-                            style="color: white">Limpar</button>
+                        <button type="button" class="btn btn-warning" id="btnClear" style="color: white">Limpar</button>
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-success" id="btnCadastrar"
-                        style="color: white">Cadastrar</button>
+                        <button type="submit" class="btn btn-success" id="btnRegister"
+                            style="color: white">Cadastrar</button>
                     </div>
                 </div>
             </div>
@@ -122,183 +177,24 @@
     </div>
 </div>
 
+<!-- Modal de Confimração de cadastro -->
+<div class="modal fade" id="modalCofirmaCadastro" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div id='conteudo'>
+                    <div id="divCheck" align="center">
 
-<div class="container">
-    <div class="m-1 my-5">
-        <div class="p-4 rounded" style="background-color: rgba(61, 61, 61, 0.63);">
-            <div class="border-top border-right border-left p-1 mx-1 rounded-top ">
-                <div class="d-flex justify-content-between">
-                    <div class=" my-1 mx-3">
-                        <h3 class="estilo">Controle de Ordens de Serviço</h3>
                     </div>
                 </div>
-            </div>
-            <div class="m-1 p-3 border rounded-bottom" style="border: white">
-                <div class="input-group mb-3 ">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-transparent  " id="basic-addon1"
-                            style="color: white; height: 30px;font-size: 12px">Nº da Ordem :</span>
-                    </div>
-                    <input type="text" class="form-control bg-transparent rounded-right" placeholder=""
-                        id='nOrdemServico' aria-label="Username" style="color: white; height: 30px;font-size: 12px"
-                        aria-describedby="basic-addon1">
-                    <div class="mx-1">
-                    </div>
-                    <div class="input-group-prepend">
-                        <label class="input-group-text  bg-transparent rounded-left" for="inputGroupSelect01"
-                            style="color: white; height: 30px;font-size: 12px">Cidade:</label>
-                    </div>
-                    <select class=" custom-select bg-dark" id="selectCIdade"
-                        style="color: white; height: 30px;font-size: 10px">
-                        <option value="">Selecione</option>
-                        <option value="1">Jacarei</option>
-                        <option value="2">São Jóse dos Campos</option>
-                        <option value="3">Guararema</option>
-                        <option value="4">Campos do Jordão</option>
-                        <option value="5">Taubate</option>
-                        <option value="6">Caçapava</option>
-                        <option value="7">Pinda</option>
-                        <option value="8">Roseira</option>
-                        <option value="9">Mogi das Cruzes</option>
-                        <option value="10">Potim</option>
-                        <option value="11">Guaratinguetá</option>
-                        <option value="15">Santa Isabel</option>
-                        <option value="16">Itatiba</option>
-                    </select>
-                </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-transparent" id="basic-addon1"
-                            style="color: white; height: 30px;font-size: 12px">Data
-                            de Execução
-                            :</span>
-                    </div>
-                    <input type="text" class="form-control bg-transparent" placeholder="DD/MM/YYYY"
-                        aria-label="Username" id='dataAbertura' style="color: white; height: 30px;font-size: 12px"
-                        aria-describedby="basic-addon1">
-                </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-transparent" id="basic-addon1"
-                            style="color: white; height: 30px;font-size: 12px">Nome
-                            do Tecnico :</span>
-                    </div>
-
-                </div>
-
-                <div class="mb-3 ">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary dropdown-toggle bg-transparent" type="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                style="color: white; height: 30px;font-size: 12px">Tipo
-                                de O.S</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" value='1.00'>Instalação</a>
-                                <a class="dropdown-item" value='1.50'>Instalação Alta Dificuldade</a>
-                                <a class="dropdown-item" value='0.50'>Manutenção</a>
-                                <a class="dropdown-item" value='0.50'>Retirada</a>
-                                <a class="dropdown-item" value='0.20'>Vistoria</a>
-                                <a class="dropdown-item" value='1.00'>Rompimento</a>
-                                <a class="dropdown-item" value='4.00'>Treinamento/NR</a>
-                                <a class="dropdown-item" value='1.00'>Acordo</a>
-                                <a class="dropdown-item" value='0.25'>Ausência</a>
-                                <a class="dropdown-item">Duplado</a>
-                                <div role="separator" class="dropdown-divider"> </div>
-                                <a class="dropdown-item" value='0.00'>Nao Executado</a>
-                            </div>
-                        </div>
-                        <input type="text" class="form-control  bg-transparent rounded-right"
-                            style="color: white; height: 30px;font-size: 12px" id="tipoOrdem"
-                            aria-label="Text input with dropdown button" placeholder="Selecione o Tipo de O.S" disabled>
-                    </div>
-
-                    <!-- <div class="form-check mx-1" id='pontoExtra'>
-                        <input class="form-check-input" type="checkbox" value="" id='PotucaoExtra'>
-                        <label class="form-check-label" for="defaultCheck1" style="color: white;">
-                            Potuação Extra.
-                        </label>
-                    </div> -->
-
-                    <div id='tecnicoDuplado'>
-                        <div class="input-group mt-3 mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-transparent" id="basic-addon1"
-                                    style="color: white; height: 30px;font-size: 12px"> Nome do 2º
-                                    Tecnico :</span>
-                            </div>
-                            <input type="text" class="form-control bg-transparent rounded-right"
-                                style="color: white; height: 30px;font-size: 12px" id='nomeTenicoDuplado'
-                                aria-label="Username" aria-describedby="basic-addon1">
-                            <div class="mx-1">
-                                <input type="text" class="form-control  bg-transparent "
-                                    style="color: white;width: 60px; height: 30px;font-size: 12px" id='txPontosDuplado'
-                                    aria-label="Text input with dropdown button" placeholder="Pontos" disabled>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="divPontoExtra">
-                        <input type="text" class="form-control bg-transparent my-1" placeholder="Pontos"
-                            aria-label="Username" id="txtPontosExtra"
-                            style="color: white;width: 65px; height: 30px;font-size: 12px"
-                            aria-describedby="basic-addon1">
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-transparent" id="basic-addon1"
-                                    style="color: white; font-size: 12px">Motivo do Ponto Extra:</span>
-                            </div>
-                            <textarea class="form-control rounded bg-transparent" value="" id="txtAreaPontoExtra"
-                                style="font-size: 8px;color: white" rows="1"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text bg-transparent" style="color: white; font-size: 12px">OBS
-                            :</span>
-                    </div>
-                    <textarea class="form-control rounded bg-transparent" id="txtAreaObservação" id="txtObs" value=""
-                        style="font-size: 8px;color: white" rows="1"></textarea>
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-secondary" id="btnCadastrar"
-                        style="color: white">Cadastrar</button>
-                </div>
-
-
-
-                <!-- Modal de Confimração de cadastro -->
-                <div class="modal fade" id="modalCofirmaCadastro" tabindex="-1" role="dialog"
-                    aria-labelledby="TituloModalCentralizado" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div id='conteudo'>
-                                    <div id="divCheck" align="center">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
-
 </div>
-
 <!-- INPUT MASK -->
 
 
 <!-- SCRIPTS  -->
-<script src="js/Requisicoes.js"></script>
+<script type="module" src="js/RegistrationForm/Index.js"></script>
+<script type="module" src="js/Requisicoes.js"></script>

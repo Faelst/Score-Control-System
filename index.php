@@ -35,6 +35,8 @@ if (empty($_SESSION['validaLogin'])) {
 
   <link rel="stylesheet" href="css/styleDashBoard.css">
 
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
   <link rel="stylesheet" type="text/css" href="css/userimg.css">
@@ -186,7 +188,7 @@ if (empty($_SESSION['validaLogin'])) {
       </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light px-xl-5" style="background-color: rgba(61, 61, 61, 0.527);">
+    <nav class="navbar navbar-expand-lg navbar-light px-xl-5 mb-4" style="background-color: rgba(61, 61, 61, 0.527);">
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
         aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Alterna navegação">
@@ -244,7 +246,7 @@ if (empty($_SESSION['validaLogin'])) {
 
     </div>
 
-    <div align="center" class="mt-2">
+    <div align="center" class="align-text-top mt-2">
       <p style="color:white">&copy; 2020 Rafael Silverio</p>
     </div>
   </div>
@@ -265,7 +267,7 @@ if (empty($_SESSION['validaLogin'])) {
   src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script src='js/inputMask/inputMask.js' onerror="location.reload()"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js'
-  onerror="location.reload()"></script>
+onerror="location.reload()"></script>
 <script src="js/popup/Navegação.js"></script>
 <script src="js/UserConfig.js"></script>
 
@@ -294,5 +296,6 @@ if (empty($_SESSION['validaLogin'])) {
   })
 </script>
 <!-- Ativar modal de configuração de usuario -->
+
 
 </html>

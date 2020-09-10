@@ -1,0 +1,15 @@
+
+
+table th {
+    text-align: center;
+    font-size: 12px;
+}
+
+td {
+    align-items: center;
+    text-align: center;
+}
+
+.container-form{
+    background-color: rgba(61, 61, 61, 0.63);
+}
