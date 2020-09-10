@@ -1,9 +1,9 @@
 <?php 
 class connectioDbVoalle {
-    private $server = '177.52.245.161:3306';
-    private $user = "cliente_s";
-    private $pass = "T?JVFu=fc35@";
-    private $dbName = "dbemp00250";
+    private $server = '';
+    private $user = '';
+    private $pass = '';
+    private $dbName = 'dbemp00250';
 
     public function getServer(){
         return $this->server;
