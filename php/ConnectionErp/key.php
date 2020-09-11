@@ -1,4 +1,6 @@
 <?php 
+
+
 class connectioDbVoalle {
     private $server = '177.52.245.161:3306';
     private $user = "cliente_s";

@@ -1,6 +1,6 @@
 <?php
 
-header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html;');
 
 session_start();
 
@@ -20,9 +20,36 @@ switch (intval($_GET['switchFlag'])) {
     case 5:
         assignmentTypeLevels($_GET['assignmentTypeId']);
         break;
+    case 6:
+        erpVoalleGettechnicals($_GET['idTechnician'], $_GET['nameTechnician']);
+        break;
 }
 
-function assignmentTypeLevels($assignmentTypeId){
+function erpVoalleGettechnicals($idTechnician, $nameTechnician)
+{
+    include('./ConnectionErp/connetion.php');
+
+    $sql = "SELECT
+	            p.id,
+                p.name as label
+            FROM people p
+                WHERE p.collaborator = 1 AND p.technical = 1
+            ";
+    $sql .= $idTechnician ? " AND p.id = $idTechnician " : "";
+    $sql .= $nameTechnician ? " AND p.name = '$nameTechnician'" : "";
+    
+    $qryLista = mysqli_query($conn, $sql);
+
+    while ($resultado = mysqli_fetch_assoc($qryLista)) {
+        $vetor[] = array_map('utf8_encode', $resultado);
+    }
+    //Passando vetor em forma de json
+    echo json_encode($vetor);
+
+}
+
+function assignmentTypeLevels($assignmentTypeId)
+{
     include_once('../php/conexao.php');
 
     $sql = "select 
@@ -56,7 +83,7 @@ function servicesTypes()
     while ($resultado = mysqli_fetch_assoc($qryLista)) {
         $vetor[] = array_map('utf8_encode', $resultado);
     }
-    
+
     //Passando vetor em forma de json
     echo json_encode($vetor);
 }
@@ -70,9 +97,9 @@ function getCities()
     $qryLista = mysqli_query($conn, $sql);
 
     while ($resultado = mysqli_fetch_assoc($qryLista)) {
-        $vetor[] = array_map('utf8_encode',$resultado);
+        $vetor[] = array_map('utf8_encode', $resultado);
     }
-    
+
     //Passando vetor em forma de json
     echo json_encode($vetor);
 }

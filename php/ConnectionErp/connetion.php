@@ -1,5 +1,6 @@
 <?php
-    include('./key.php');
+    include 'key.php';
+    
     $db = new connectioDbVoalle;
 
     $servidor= $db->getServer();

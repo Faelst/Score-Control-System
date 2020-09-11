@@ -52,8 +52,8 @@
 
                 <div class="col-lg-2 col-md-3 col-sm-4">
                     <div class="form-group ">
-                        <label class="text-light" >ID</label>
-                        <input type="text" class="form-control text-light bg-transparent" id='technicianName'
+                        <label class="text-light">ID</label>
+                        <input type="text" class="form-control text-light bg-transparent" id='technicialId'
                             name='technicialId'>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLongTitle">Tecnico adicional</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" validate="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -89,6 +89,7 @@
                             <table class="table table-sm m-0">
                                 <thead>
                                     <tr>
+                                        <th scope="col" class="align-middle">Id</th>
                                         <th scope="col" class="align-middle">Nome do Tecnico</th>
                                         <th scope="col" class="align-middle">Tipo de Acompanhamento</th>
                                         <th scope="col" class="align-middle">
@@ -102,8 +103,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="btn btn-primary">Salvar
+                        <div class="modal-footer-custom">
+                            <div id="alertToogleAddTechnical"></div>
+                            <button type="button" validate="modal" class="btn btn-primary mt-3 mr-3">Salvar
                                 Alterações</button>
                         </div>
                     </div>
@@ -192,7 +194,6 @@
         </div>
     </div>
 </div>
-<!-- INPUT MASK -->
 
 
 <!-- SCRIPTS  -->

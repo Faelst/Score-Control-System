@@ -13,3 +13,29 @@ td {
 .container-form{
     background-color: rgba(61, 61, 61, 0.63);
 }
+ 
+.ui-autocomplete{
+    z-index: 1050 !important;
+}
+
+.ui-widget-content{
+    font-size: 13px !important;
+    border: none;
+    border-radius: 5px;
+}
+
+
+.modal-footer-custom{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    padding-bottom: 1rem !important;
+    border-top: 1px solid #e9ecef !important;
+}
+
+.alert-custom {
+    position: relative !important;
+    padding: .75rem 1.25rem !important;
+    border: 1px solid transparent !important;
+    width: 100% !important;
+}
