@@ -32,20 +32,20 @@ $('#btnClear').click(e => {
   $('table tbody tr').remove();
 })
 
-$('#btnRegister').click(e => {
-  e.preventDefault();
-  const dataForm = $('form').serialize();
-  console.log(dataForm);
-})
-
 $('#issueDate').datepicker(utils.dataPickersHeraders);
 
 $('#addTechnical').click(e => {
   e.preventDefault();
-  $('#addTechnicalModal').modal('show')
+  $('#addTechnicalModal').modal({
+    keyboard: false,
+    backdrop: false
+  })
 });
 
-////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+//  Cuida do comportamento visual e validações da table de tecnico adicional  //
+////////////////////////////////////////////////////////////////////////////////
 $('table > thead > tr > th > a').click(e => {
   e.preventDefault();
 
@@ -53,7 +53,7 @@ $('table > thead > tr > th > a').click(e => {
 
   $.each($(".table tbody tr"), e => idRow++);
 
-  $('table > tbody').append(`<tr id=row${idRow}> <td class="align-middle"> <span name="addTechnicalId${idRow}" id="addTechnicalId${idRow}"></span> </td> <td> <input type="text" class="form-control" id="addTechnicalName${idRow}" name="addTechnicalName${idRow}"  placeholder="Nome do tecnico"></td> <td> <select class="form-control" name="addTechFollowType${idRow}"> <option>Auxiliar</option> <option>Duplado</option> </select> </td> <td> <button class="btn btn-danger row-remove"> <i class="text-align fas fa-trash fa-sm"></i> </button> </td> </tr>`)
+  $('table > tbody').append(`<tr id=row${idRow}> <td class="align-middle"> <span id="addTechnicalId${idRow}"></span> </td> <td> <input type="text" class="form-control" id="addTechnicalName${idRow}"   placeholder="Nome do tecnico"></td> <td> <select class="form-control" > <option>Auxiliar</option> <option>Duplado</option> </select> </td> <td> <button class="btn btn-danger row-remove"> <i class="text-align fas fa-trash fa-sm"></i> </button> </td> </tr>`)
 
   func.loadIntegrationErp("0", "0", resp => {
     resp = JSON.parse(resp)
@@ -63,14 +63,24 @@ $('table > thead > tr > th > a').click(e => {
   })
 
   $(`#addTechnicalName${idRow}`).change(e => {
-    func.loadIntegrationErp($(`#addTechnicalName${idRow}`).val(), "0", resp => {
-      try {
-        resp = JSON.parse(resp)
-        $(`#addTechnicalId${idRow}`).val(resp[0].id).text(resp[0].id);
-      } catch (e) {
-        $(`#addTechnicalId${idRow}`).val("").text("");
-      }
-    })
+
+    if ($(`#addTechnicalName${idRow}`).val()) {
+
+      func.loadIntegrationErp($(`#addTechnicalName${idRow}`).val(), "0", resp => {
+        try {
+          resp = JSON.parse(resp)
+          $(`#addTechnicalId${idRow}`).val(resp[0].id).text(resp[0].id);
+        } catch (e) {
+          $(`#addTechnicalId${idRow}`).val("").html('<i class="fas fa-exclamation-triangle text-danger"></i>');
+        }
+      })
+
+    } else {
+
+      $(`#addTechnicalId${idRow}`).val("").text("");
+
+    }
+
   })
 
   $(`tr#row${idRow}`).find("td button.row-remove").on("click", function () {
@@ -80,56 +90,53 @@ $('table > thead > tr > th > a').click(e => {
   });
 
 });
-/////////////////////////////////////////////////////////  
 
-/////////////////////////////////////////////////////////  
+//  Validação para finanlizar o modal
 $('[validate="modal"]').click(e => {
 
   let erros;
 
   $("table tbody tr td input").each(async function (index) {
-    
-    const resp = await func.loadIntegrationErp($(this).val(), "0", calback => {});
-    
-    try{
+
+    let resp = await func.loadIntegrationErp($(this).val(), "0", calback => { });
+
+    try {
       resp = JSON.parse(resp);
-    }catch(e){
+    } catch (e) {
       console.log(e)
       erros = e
     }
-    
+
+    if (!erros) {
+      $('#addTechnicalModal').modal('hide')
+      $('#alertToogleAddTechnical').html('')
+    } else {
+      $('#alertToogleAddTechnical')
+        .hide()
+        .html('<div class="alert-custom alert-danger" role="alert">Verifique se os tecnicos adicionais foram preenchidos corretamente</div>')
+        .show('slow');
+    }
+
     if ($(this).val() == "") {
       $(`tr#row${index}`)
-      .hide('slow')
-      .remove()
+        .hide('slow')
+        .remove()
     }
-    
-  })
-  
-  console.log(!erros)
 
-  if (!erros) {
-    $('#addTechnicalModal').modal('hide')
-    $('#alertToogleAddTechnical').html('')
-  } else {
-    $('#alertToogleAddTechnical')
-      .hide()
-      .html('<div class="alert-custom alert-danger" role="alert">Verifique se os tecnicos adicionais foram preenchidos corretamente</div>')
-      .show('slow');
-  }
-  
+  })
+
   if (!$("table tbody tr td").length) {
     $('#addTechnicalModal').modal('hide');
     $('#alertToogleAddTechnical').html('');
   }
 
 })
+////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////
+
+
 /////////////////////////////////////////////////////////  
 
-
-// $('#addTechnicalModal').on('shown.bs.modal', function () {
-
-// })
 
 $('#technicialId').change(e => {
   func.loadIntegrationErp("0", $('#technicialId').val(), resp => {
@@ -143,6 +150,31 @@ $('#technicianName').change(e => {
     resp = JSON.parse(resp)
     resp ? $('#technicialId').val(resp[0].id) : $('#technicialId').val("")
   })
+})
+
+
+$('#btnRegister').click(e => {
+  e.preventDefault();
+  let addTechinical = []
+  $('#addTechinicalTable > tbody > tr').each(function (i) {
+    addTechinical.push({
+      id: $('tr > td > span').val(),
+      name: $('tr > td > input').val(),
+      followType: $('tr > td > select').val()
+    })
+  });
+
+  console.log(addTechinical)
+  let dataForm = $('form').serializeArray();
+
+  
+  const flag = func.validateInput(dataForm);
+  console.log(flag)
+  try{
+     flag && func.postDataForm(dataForm, addTechinical);
+  }catch(e){
+    console.log(e)
+  }
 })
 
 

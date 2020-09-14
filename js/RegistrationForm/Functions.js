@@ -1,3 +1,6 @@
+
+const endPointApi = 'http://localhost:8080/api'
+
 const clearInputs = () => {
   $('#serviceNumber').val('')
   $('#serviceCity').val('')
@@ -15,62 +18,6 @@ const getCurrentDate = () => {
     mm = (today.getMonth() + 1).toString().padStart(2, '0'),
     yyyy = today.getFullYear()
   return mm + '/' + dd + '/' + yyyy;
-}
-
-const callCadastro = () => {
-
-  var numeroOrdem = $('#nOrdemServico').val()
-  var cidade = $('#selectCIdade').val()
-  var dataExecucao = $('#dataAbertura').val()
-  var dataFechamento = getCurrentDate();
-  var tipoOrdenServico = $('#tipoOrdem').val()
-
-  if ($('#tipoOrdem').val() == 'Duplado') {
-    var pontuacaoExtra = $('#txPontos').val()
-    var motivoPontoExtra = 'Ordem de Serviço Duplada'
-  } else {
-    var pontuacaoExtra = $('#txtPontosExtra').val()
-    var motivoPontoExtra = $('#txtAreaPontoExtra').val()
-  }
-
-  var observacao = $('#txtAreaObservação').val();
-  var nomeTecnico = $('#nomeTenico').val();
-
-  var nomeTenicoDuplado = $('#nomeTenicoDuplado').val()
-
-  // criação dos paramentros para requisição
-
-  $.ajax({
-    url: './php/CadastroAgendamento.php?switchFlag=1',
-    cache: 'false',
-    method: 'GET',
-    async: true,
-    dataType: 'html',
-    data: {
-      numeroOrdem: numeroOrdem,
-      cidade: cidade,
-      dataExecucao: dataExecucao,
-      dataFechamento: dataFechamento,
-      tipoOrdenServico: tipoOrdenServico,
-      pontuacaoExtra: pontuacaoExtra,
-      motivoPontoExtra: motivoPontoExtra,
-      observacao: observacao,
-      nomeTecnico: nomeTecnico,
-      nomeTenicoDuplado: nomeTenicoDuplado,
-      check: check
-    }
-  }).done(function (resp) {
-    if (resp == 1) {
-      $('#divCheck').html("<img style='width:50%;' src='img/gif/check.gif' />")
-      $('#modalCofirmaCadastro').modal('show')
-      setTimeout(function () {
-        $('#modalCofirmaCadastro').modal('hide')
-      }, 1500)
-      limparCampos()
-    } else {
-      alert(resp)
-    }
-  })
 }
 
 const loadCities = _ => {
@@ -125,4 +72,55 @@ const loadIntegrationErp = async (nameTechnician = '0', idTechnician = '0', call
 
 }
 
-export default { clearInputs, getCurrentDate, callCadastro, loadCities, loadAssignmentTypes, loadAssignmentTypesLevels, loadIntegrationErp }
+const validateInput = (dataForm) => {
+  
+  let data = {}
+  let keysNull = []
+  
+  $('*').removeClass('invalid-input');
+
+  $(dataForm).each((i, obj) => {
+    data[obj.name] = obj.value;
+  })
+
+  $.map(data, function( value, key ) {
+    value == "" ? keysNull.push(key) : "";
+  })// Flag verifica se a algum campo sem preenchimento atravez de um filter
+
+  if(keysNull.length){
+    keysNull.map(e => {
+      console.log(e)
+      $(`[name=${e}]`).addClass('invalid-input')
+    })
+    return false
+  }
+  return true
+}
+
+const postDataForm = async (dataFormArraySerialize,addTechinical) => {
+  let sendToData = {}
+  
+  $.map(dataFormArraySerialize, (value, key) => {
+    sendToData[value.name] = value.value
+  })
+  
+  if(addTechinical.length){
+    sendToData = {
+      ...sendToData,
+      addTechinical
+    }
+  }
+  
+  $.post(`${endPointApi}/registerSolicitation`, sendToData)
+}
+
+export default { 
+  clearInputs,
+  getCurrentDate,
+  loadCities,
+  loadAssignmentTypes,
+  loadAssignmentTypesLevels,
+  loadIntegrationErp,
+  validateInput,
+  postDataForm
+}
