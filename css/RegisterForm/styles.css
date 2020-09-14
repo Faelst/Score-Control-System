@@ -39,3 +39,11 @@ td {
     border: 1px solid transparent !important;
     width: 100% !important;
 }
+
+.invalid-input{
+    border: 0.5px solid red !important;
+}
+
+.disabled:disabled {
+    background: #ccc;
+}
