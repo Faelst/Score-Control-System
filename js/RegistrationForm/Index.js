@@ -164,7 +164,6 @@ $('#btnRegister').click(e => {
     })
   });
 
-  console.log(addTechinical)
   let dataForm = $('form').serializeArray();
 
   

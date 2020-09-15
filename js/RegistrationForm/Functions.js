@@ -33,10 +33,10 @@ const loadCities = _ => {
 }
 
 const loadAssignmentTypes = _ => {
-  $.get('./php/CadastroAgendamento.php?switchFlag=4')
+  $.get(`${endPointApi}/assignmentTypes`)
     .then(resp => {
-      const assignmentTypes = JSON.parse(resp)
-      assignmentTypes.map(e => $('#assignmentTypes').append(`<a class="dropdown-item text-light" value=${e.id_procedimento_agendamento}>${decodeURIComponent(escape(e.nomeProcedimento))}</a>`))
+      const assignmentTypes = resp
+      assignmentTypes.map(e => $('#assignmentTypes').append(`<a class="dropdown-item text-light" value=${e.id}>${e.title}</a>`))
     })
     .catch(e => {
       alert(`Erro ao carregar as cidades.`)
@@ -45,11 +45,11 @@ const loadAssignmentTypes = _ => {
 }
 
 const loadAssignmentTypesLevels = (assignmentTypeId) => {
-  $.get(`./php/CadastroAgendamento.php?switchFlag=5&assignmentTypeId=${assignmentTypeId}`)
+  $.get(`${endPointApi}/assignmentLevels/${assignmentTypeId}`)
     .then(resp => {
       const levelsAssigmentAtribute = $('#levelsAssigment');
       levelsAssigmentAtribute.html('<option class="bg-dark text-light">Selecionar</option>');
-      const levelsAssigment = JSON.parse(resp);
+      const levelsAssigment = resp;
       levelsAssigment.map(e => {
         levelsAssigmentAtribute.append(`<option class="bg-dark text-light" value=${e.id} wm-score=${e.score}>${e.title}</option>`);
       })

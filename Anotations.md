@@ -13,15 +13,14 @@
 
 -   Retirada:
 •   Normal - 0,5 ptn
+•   Acordo - 1.00 ptn
 
 -   Vistoria:
-•   Normal - 0,2 ptn
+•   residencial - 0,2 ptn
 
 -   Treinamento N/R
-•   Normal - 0,2 ptn
+•   Normal - 4.0 ptn
 
--   Acordo - 1.00 ptn
-•   Normal - 0,2 ptn
 
 
 -- Regra de negocio ---
