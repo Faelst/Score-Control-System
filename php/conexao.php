@@ -9,7 +9,7 @@ use function PHPSTORM_META\type;
 
 $servidor="localhost:3306";
     $usuario="root";
-    $senha="";
+    $senha="admin";
     $dbname="controleativacao";
 
     try {
