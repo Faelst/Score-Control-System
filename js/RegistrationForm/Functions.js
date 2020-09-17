@@ -21,10 +21,10 @@ const getCurrentDate = () => {
 }
 
 const loadCities = _ => {
-  $.get('./php/CadastroAgendamento.php?switchFlag=3')
+  $.get(`${endPointApi}/cities`)
     .then(resp => {
-      const cities = JSON.parse(resp)
-      cities.map(e => $('#serviceCity').append(`<option class='bg-dark text-light' value=${e.id_cidade}>${decodeURIComponent(escape(e.nome_cidade))}</option>`))
+      const cities = resp.data
+      cities.map(e => $('#serviceCity').append(`<option class='bg-dark text-light' value=${e.id_cidade}>${e.nome_cidade}</option>`))
     })
     .catch(e => {
       alert(`Erro ao carregar as cidades.`)
@@ -60,10 +60,17 @@ const loadAssignmentTypesLevels = (assignmentTypeId) => {
 
 
 const loadIntegrationErp = async (nameTechnician = '0', idTechnician = '0', callback) => {
+  const settings = {
+    "url": `${endPointApi}/technicals`,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify({ nameTechnician, idTechnician }),
+  };
 
-  return await $.get(`./php/CadastroAgendamento.php?switchFlag=6&nameTechnician=${nameTechnician}&idTechnician=${idTechnician}`)
-    .done(resp => {
-      callback(resp);
+  return await $.ajax(settings).done(resp => {
+      callback(resp.data);
       return resp;
     })
     .catch(e => {
@@ -73,21 +80,21 @@ const loadIntegrationErp = async (nameTechnician = '0', idTechnician = '0', call
 }
 
 const validateInput = (dataForm) => {
-  
+
   let data = {}
   let keysNull = []
-  
+
   $('*').removeClass('invalid-input');
 
   $(dataForm).each((i, obj) => {
     data[obj.name] = obj.value;
   })
 
-  $.map(data, function( value, key ) {
+  $.map(data, function (value, key) {
     value == "" ? keysNull.push(key) : "";
   })// Flag verifica se a algum campo sem preenchimento atravez de um filter
 
-  if(keysNull.length){
+  if (keysNull.length) {
     keysNull.map(e => {
       console.log(e)
       $(`[name=${e}]`).addClass('invalid-input')
@@ -97,24 +104,24 @@ const validateInput = (dataForm) => {
   return true
 }
 
-const postDataForm = async (dataFormArraySerialize,addTechinical) => {
+const postDataForm = async (dataFormArraySerialize, addTechinical) => {
   let sendToData = {}
-  
+
   $.map(dataFormArraySerialize, (value, key) => {
     sendToData[value.name] = value.value
   })
-  
-  if(addTechinical.length){
+
+  if (addTechinical.length) {
     sendToData = {
       ...sendToData,
       addTechinical
     }
   }
-  
+
   $.post(`${endPointApi}/registerSolicitation`, sendToData)
 }
 
-export default { 
+export default {
   clearInputs,
   getCurrentDate,
   loadCities,

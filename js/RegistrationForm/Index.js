@@ -6,9 +6,8 @@ $(document).ready(e => {
   func.loadCities();  // Popular as Cidades no SELECT
   func.loadAssignmentTypes(); // Popular os tipos de solicitação no \SELECT
   func.loadIntegrationErp("0", "0", resp => {
-    resp = JSON.parse(resp)
     $("#technicianName").autocomplete({
-      source: resp
+      source: resp.map(e => ({value: e.name , label: e.name}))
     });
   })
 })
@@ -56,9 +55,8 @@ $('table > thead > tr > th > a').click(e => {
   $('table > tbody').append(`<tr id=row${idRow}> <td class="align-middle"> <span id="addTechnicalId${idRow}"></span> </td> <td> <input type="text" class="form-control" id="addTechnicalName${idRow}"   placeholder="Nome do tecnico"></td> <td> <select class="form-control" > <option>Auxiliar</option> <option>Duplado</option> </select> </td> <td> <button class="btn btn-danger row-remove"> <i class="text-align fas fa-trash fa-sm"></i> </button> </td> </tr>`)
 
   func.loadIntegrationErp("0", "0", resp => {
-    resp = JSON.parse(resp)
     $(`#addTechnicalName${idRow}`).autocomplete({
-      source: resp
+      source: resp.map(e => e.name)
     }).attr('style', 'z-index: 1050 !important;');
   })
 
@@ -68,7 +66,7 @@ $('table > thead > tr > th > a').click(e => {
 
       func.loadIntegrationErp($(`#addTechnicalName${idRow}`).val(), "0", resp => {
         try {
-          resp = JSON.parse(resp)
+          
           $(`#addTechnicalId${idRow}`).val(resp[0].id).text(resp[0].id);
         } catch (e) {
           $(`#addTechnicalId${idRow}`).val("").html('<i class="fas fa-exclamation-triangle text-danger"></i>');
@@ -101,7 +99,7 @@ $('[validate="modal"]').click(e => {
     let resp = await func.loadIntegrationErp($(this).val(), "0", calback => { });
 
     try {
-      resp = JSON.parse(resp);
+      resp = resp.data;
     } catch (e) {
       console.log(e)
       erros = e
@@ -140,14 +138,13 @@ $('[validate="modal"]').click(e => {
 
 $('#technicialId').change(e => {
   func.loadIntegrationErp("0", $('#technicialId').val(), resp => {
-    resp = JSON.parse(resp)
-    resp ? $('#technicianName').val(resp[0].label) : $('#technicianName').val("")
+    resp ? $('#technicianName').val(resp[0].name) : $('#technicianName').val("")
   })
 })
 
 $('#technicianName').change(e => {
   func.loadIntegrationErp($('#technicianName').val(), "0", resp => {
-    resp = JSON.parse(resp)
+    
     resp ? $('#technicialId').val(resp[0].id) : $('#technicialId').val("")
   })
 })
@@ -164,11 +161,12 @@ $('#btnRegister').click(e => {
     })
   });
 
+  console.log(addTechinical)
   let dataForm = $('form').serializeArray();
 
   
   const flag = func.validateInput(dataForm);
-  console.log(flag)
+  console.log()
   try{
      flag && func.postDataForm(dataForm, addTechinical);
   }catch(e){
