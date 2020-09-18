@@ -7,7 +7,9 @@ if (empty($_SESSION['validaLogin'])) {
 }
 
 ?>
-
+ <script type="text/javascript">
+    sessionStorage.setItem('userId' , '<?php echo $_SESSION['id_usuario'];?>');
+</script>
 
 <!DOCTYPE html>
 <html lang="pt-br">

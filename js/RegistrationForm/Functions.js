@@ -111,14 +111,29 @@ const postDataForm = async (dataFormArraySerialize, addTechinical) => {
     sendToData[value.name] = value.value
   })
 
+  sendToData = {
+    ...sendToData,
+    userId: sessionStorage.getItem('userId')
+  }
+
   if (addTechinical.length) {
     sendToData = {
       ...sendToData,
       addTechinical
     }
   }
-
-  $.post(`${endPointApi}/registerSolicitation`, sendToData)
+  console.log(sendToData)
+  var settings = {
+    "url": `${endPointApi}/registerSolicitation`,
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "data": JSON.stringify(sendToData),
+  };
+  
+  $.ajax(settings).done(function (response) {
+  });
 }
 
 export default {

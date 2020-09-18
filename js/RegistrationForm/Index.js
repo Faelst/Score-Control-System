@@ -1,17 +1,6 @@
 import func from './Functions.js'
 import utils from '../utils/DataPickersHeaders.js'
 
-
-$(document).ready(e => {
-  func.loadCities();  // Popular as Cidades no SELECT
-  func.loadAssignmentTypes(); // Popular os tipos de solicitação no \SELECT
-  func.loadIntegrationErp("0", "0", resp => {
-    $("#technicianName").autocomplete({
-      source: resp.map(e => ({value: e.name , label: e.name}))
-    });
-  })
-})
-
 // Popula os NIVEIS da solicitação de acordo com o tipo de solicitação.
 $("div#assignmentTypes").click(e => {
   let assignmentTypeId = e.target.attributes.value.value;
@@ -53,7 +42,7 @@ $('table > thead > tr > th > a').click(e => {
   $.each($(".table tbody tr"), e => idRow++);
 
   $('table > tbody').append(`<tr id=row${idRow}> <td class="align-middle"> <span id="addTechnicalId${idRow}"></span> </td> <td> <input type="text" class="form-control" id="addTechnicalName${idRow}"   placeholder="Nome do tecnico"></td> <td> <select class="form-control" > <option>Auxiliar</option> <option>Duplado</option> </select> </td> <td> <button class="btn btn-danger row-remove"> <i class="text-align fas fa-trash fa-sm"></i> </button> </td> </tr>`)
-
+  
   func.loadIntegrationErp("0", "0", resp => {
     $(`#addTechnicalName${idRow}`).autocomplete({
       source: resp.map(e => e.name)
@@ -63,7 +52,7 @@ $('table > thead > tr > th > a').click(e => {
   $(`#addTechnicalName${idRow}`).change(e => {
 
     if ($(`#addTechnicalName${idRow}`).val()) {
-
+      
       func.loadIntegrationErp($(`#addTechnicalName${idRow}`).val(), "0", resp => {
         try {
           
@@ -74,9 +63,9 @@ $('table > thead > tr > th > a').click(e => {
       })
 
     } else {
-
+      
       $(`#addTechnicalId${idRow}`).val("").text("");
-
+      
     }
 
   })
@@ -86,16 +75,16 @@ $('table > thead > tr > th > a').click(e => {
     $('#alertToogleAddTechnical').hide('slow').html('')
     $(this).closest("tr").remove();
   });
-
+  
 });
 
 //  Validação para finanlizar o modal
 $('[validate="modal"]').click(e => {
-
+  
   let erros;
-
+  
   $("table tbody tr td input").each(async function (index) {
-
+    
     let resp = await func.loadIntegrationErp($(this).val(), "0", calback => { });
 
     try {
@@ -110,24 +99,24 @@ $('[validate="modal"]').click(e => {
       $('#alertToogleAddTechnical').html('')
     } else {
       $('#alertToogleAddTechnical')
-        .hide()
-        .html('<div class="alert-custom alert-danger" role="alert">Verifique se os tecnicos adicionais foram preenchidos corretamente</div>')
-        .show('slow');
+      .hide()
+      .html('<div class="alert-custom alert-danger" role="alert">Verifique se os tecnicos adicionais foram preenchidos corretamente</div>')
+      .show('slow');
     }
-
+    
     if ($(this).val() == "") {
       $(`tr#row${index}`)
         .hide('slow')
         .remove()
     }
-
+    
   })
-
+  
   if (!$("table tbody tr td").length) {
     $('#addTechnicalModal').modal('hide');
     $('#alertToogleAddTechnical').html('');
   }
-
+  
 })
 ////////////////////////////////////////////////////////////////////////////////  
 ////////////////////////////////////////////////////////////////////////////////
@@ -161,17 +150,19 @@ $('#btnRegister').click(e => {
     })
   });
 
-  console.log(addTechinical)
   let dataForm = $('form').serializeArray();
-
   
   const flag = func.validateInput(dataForm);
-  console.log()
-  try{
-     flag && func.postDataForm(dataForm, addTechinical);
-  }catch(e){
-    console.log(e)
-  }
+  flag && func.postDataForm(dataForm, addTechinical);
 })
 
-
+$(function() {
+  console.log('carregando...')
+  func.loadCities();  // Popular as Cidades no SELECT
+  func.loadAssignmentTypes(); // Popular os tipos de solicitação no \SELECT
+  func.loadIntegrationErp("0", "0", resp => {
+    $("#technicianName").autocomplete({
+      source: resp.map(e => ({value: e.name , label: e.name}))
+    });
+  })
+})
