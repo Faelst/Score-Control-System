@@ -9,7 +9,9 @@ const clearInputs = () => {
   $('#assignmentType').val('')
   $('#levelsAssigment').val('')
   $('#scoreAmount').val('')
-  $('#descriotionService').val('')
+  $('#descriotionService').val('');
+  $('#technicialId').val('');
+  $('table tbody tr').remove();
 }
 
 const getCurrentDate = () => {
@@ -96,7 +98,6 @@ const validateInput = (dataForm) => {
 
   if (keysNull.length) {
     keysNull.map(e => {
-      console.log(e)
       $(`[name=${e}]`).addClass('invalid-input')
     })
     return false
@@ -104,7 +105,7 @@ const validateInput = (dataForm) => {
   return true
 }
 
-const postDataForm = async (dataFormArraySerialize, addTechinical) => {
+const postDataForm = async (dataFormArraySerialize, addTechinical, callback) => {
   let sendToData = {}
 
   $.map(dataFormArraySerialize, (value, key) => {
@@ -122,7 +123,7 @@ const postDataForm = async (dataFormArraySerialize, addTechinical) => {
       addTechinical
     }
   }
-  console.log(sendToData)
+
   var settings = {
     "url": `${endPointApi}/registerSolicitation`,
     "method": "POST",
@@ -132,7 +133,9 @@ const postDataForm = async (dataFormArraySerialize, addTechinical) => {
     "data": JSON.stringify(sendToData),
   };
   
-  $.ajax(settings).done(function (response) {
+  $.ajax(settings)
+    .done(function (res) {
+      callback(res)
   });
 }
 
