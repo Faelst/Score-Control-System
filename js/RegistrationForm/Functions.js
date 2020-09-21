@@ -1,5 +1,5 @@
 
-const endPointApi = 'http://localhost:8080/api'
+const endPointApi = 'http://177.52.246.165:8081/api'
 
 const clearInputs = () => {
   $('#serviceNumber').val('')
