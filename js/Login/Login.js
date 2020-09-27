@@ -19,7 +19,7 @@ $(document).ready(function () {
                 .done(function (resp) {
                     resposta = JSON.parse(resp);
                     if (parseInt(resposta.rows) == 1) {
-                        window.location.href = 'http://177.52.246.165/score-control-system/'; //(document.URL).replace("login.php","index.php");
+                        window.location.href = 'http://localhost/score-control-system/'; //(document.URL).replace("login.php","index.php");
                     } else {
                         $('.validaLogin').html('<span class="badge badge-danger conteudo ">LOGIN INCORRETO.</span>');
                     }

@@ -7,10 +7,10 @@ use function PHPSTORM_META\type;
 //     $senha="FuARlWRUBGTRgJZw";
 //     $dbname="controle_ativacao";
 
-$servidor="localhost:3306";
-    $usuario="root";
-    $senha="admin";
-    $dbname="controleativacao";
+$servidor="177.52.246.165:3306";
+    $usuario="fael_st";
+    $senha="Adm#vivas2009sp";
+    $dbname="score_control_db";
 
     try {
         //code...

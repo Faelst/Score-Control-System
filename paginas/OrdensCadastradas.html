@@ -1,76 +1,80 @@
-<link rel="stylesheet" href="css/autocomplete.css">
-<link rel="stylesheet" href="css/FiltroCadastro/CheckBoxFiltroCadastro.css">
+<link rel="stylesheet" href="css/autocomplete.css" />
+<link rel="stylesheet" href="css/FiltroCadastro/CheckBoxFiltroCadastro.css" />
 
-<script src="node_modules/jquery-mask-plugin/dist/jquery.mask.js">/* inputmask */</script>
+<link rel="stylesheet" href="css/tables.css" />
+<link rel="stylesheet" href="css/ListServices/styles.css" />
+
+<script src="node_modules/jquery-mask-plugin/dist/jquery.mask.js">
+  /* inputmask */
+</script>
 <script src="js/AlterarExcluir.js"></script>
 <script src="js/FiltroCadastro/js/FiltroCadastro.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
 
 <div class="container-fluid">
-    <div class="m-1 my-5">
-        <div class="p-2 rounded" style="background-color: rgba(61, 61, 61, 0.63);">
-
-            <div class="d-flex bd-highlight m-3">
-                <div class="pt-2 bd-highlight">
-                    <h4 class="p-1 " style="color: white"> Ordens Cadastradas : </h4>
-                </div>
-            </div>
-
-            <hr class="bg-white">
-
-            <table id="tableListServices" class="display" style="width:100%;font-size: 10px">
-                <thead>
-                    <tr>
-                        <th>ID: </th>
-                        <th>Nº ordem: </th>
-                        <th>Tecnico: </th>
-                        <th>Data de Exec.: </th>
-                        <th>Tipo de Ordem: </th>
-                        <th>Usuario: </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-
-
+  <div class="m-1 my-5">
+    <div class="p-2 rounded" style="background-color: rgba(61, 61, 61, 0.63)">
+      <div class="d-flex bd-highlight m-3">
+        <div class="pt-2 bd-highlight">
+          <h4 class="p-1" style="color: white">Ordens Cadastradas :</h4>
         </div>
+      </div>
+
+      <hr class="hr-Collor" />
+
+      <table id="example" class="display" style="width: 100%">
+        <thead>
+          <tr>
+            <th>Detalhes</th>
+            <th>Id</th>
+            <th>Nº do Serviço</th>
+            <th>Tecnico</th>
+            <th>Tipo de O.S</th>
+            <th>Cidade</th>
+            <th>Usuario</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <script>
+            const endPointApi = 'http://localhost:8081/api';
+            $.get(`${endPointApi}/services`)
+              .then(resp => {
+                resp.map(e => {
+                  $('#example tbody').append(`
+                <tr id='tr${e.servicesId}'>
+                <td class="table-details-btn">
+                  <button class="btn btn-transparent"><i class="fas fa-plus-circle details-button"></i></button>
+                </td>
+                <td class='font-weight-bold'>${e.servicesId}</td>
+                <td class='font-weight-bold'>${e.serviceNumber}</td>
+                <td>${e.technicalName}</td>
+                <td>${e.assignmentTypesTitle}</td>
+                <td>${e.cityName}</td>
+                <td>${e.userName}</td>
+                <td class='table-btns'><button class='btn table-btn-edit'><i class="fas fa-edit"></i></button><button class='btn table-btn-delete'><i class="fas fa-trash"></i></button></td>
+              </tr>
+                `)
+                })
+              })
+          </script>
+          <tr>
+            <td class="table-details-btn">
+              <button class="btn btn-transparent"><i class="fas fa-plus-circle details-button"></i></button>
+            </td>
+            <td class='font-weight-bold'>1</td>
+            <td class='font-weight-bold'>123123</td>
+            <td>Wesley Sena</td>
+            <td>Instalação</td>
+            <td>Jacarei</td>
+            <td>Rafael Silverio</td>
+            <td class='table-btns'><button class='btn table-btn-edit'><i class="fas fa-edit"></i></button><button class='btn table-btn-delete'><i class="fas fa-trash"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
-
-<script>
-    $(function () {
-        $('tbody').empty();
-        $('#example').DataTable({
-
-            "ordering": true,
-            "language": {
-                "url": "JsonTabela/Portuguese-Brasil.json",
-            },
-            // ajax: {
-            //     url: './php/PopularTables.php?flag=1',
-            //     dataSrc: ''
-            // },
-            columns: [
-                {'data': 'id_cadastro_agendamento'},
-                {'data': 'numero_ordem'},
-                {'data': 'Nome_usuario'},
-                {'data': 'data_execucao'},
-                {'data': 'Nome_tecnico'},
-                {'data': 'Cidade'},
-                {'data': 'Nome_procedimento'},
-                {'data': 'ponto_extra'},
-                {'data': 'motivo_extra'},
-                {'data': 'obs'},
-            ]
-        });
-
-        var table = $('#example').DataTable();
-
-        table.columns(0).order('desc').draw();
-    })
-</script>
-<link rel="stylesheet" href="css/tables.css">
+<script type="module" src="js/ListServices/DataTable/Index.js">

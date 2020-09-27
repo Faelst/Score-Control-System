@@ -1,5 +1,6 @@
 
-const endPointApi = 'http://177.52.246.165:8081/api'
+//const endPointApi = 'http://177.52.246.165:8081/api'
+const endPointApi = 'http://localhost:8081/api'
 
 const clearInputs = () => {
   $('#serviceNumber').val('')
@@ -26,7 +27,7 @@ const loadCities = _ => {
   $.get(`${endPointApi}/cities`)
     .then(resp => {
       const cities = resp.data
-      cities.map(e => $('#serviceCity').append(`<option class='bg-dark text-light' value=${e.id_cidade}>${e.nome_cidade}</option>`))
+      cities.map(e => $('#serviceCity').append(`<option class='bg-dark text-light' value=${e.id}>${e.name}</option>`))
     })
     .catch(e => {
       alert(`Erro ao carregar as cidades.`)

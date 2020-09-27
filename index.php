@@ -249,7 +249,7 @@ if (empty($_SESSION['validaLogin'])) {
     </div>
 
     <div align="center" class="align-text-top mt-2">
-      <p style="color:white">&copy; 2020 Rafael Silverio</p>
+      <p style="color:white">&copy; 2020 Vivas Telecom</p>
     </div>
   </div>
 
@@ -272,6 +272,10 @@ if (empty($_SESSION['validaLogin'])) {
 onerror="location.reload()"></script>
 <script src="js/popup/Navegação.js"></script>
 <script src="js/UserConfig.js"></script>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js' onerror="location.reload()"></script>
+
 
 <script>
   $(document).ready(function () {

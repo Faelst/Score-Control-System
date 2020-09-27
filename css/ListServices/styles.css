@@ -1,0 +1,76 @@
+button.btn-transparent {
+    background-color: rgba(252, 252, 252, 0);
+    width: 100%;
+    outline: none;
+    box-shadow: none !important;
+}
+
+
+.table-details-btn {
+    text-align: center;
+}
+
+div.table-details{
+    margin: 10px 5px;
+}
+
+tr > td > i {
+    color: black !important;
+    font-size: 20px !important;
+    margin-right: 30px !important;
+}
+
+.table-details-1{
+    table-layout: fixed;
+    width: 400px;
+}
+
+.table-details-1 td , .table-details-2 td , .table-details-3 td {
+    word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    font-size: 13px;
+}
+
+table .table-details-data{
+    text-align: end;
+}
+
+.hr-Collor{
+    background-color: #ef4a01;
+}
+
+.details-button{
+    color: #ef4a01;
+}
+
+table .btn{
+    font-size: 1.2rem;
+}
+
+td.table-btns{
+    text-align: end;
+}
+
+.table-btn-edit{
+    box-shadow: none !important;
+    margin: 0px 5px;
+    background-color: transparent !important;
+    color: #ffc107 !important;
+}
+
+.table-btn-delete{
+    box-shadow: none !important;
+    margin: 0px 5px;
+    background-color: transparent !important;
+    color: #bd2130 !important;
+}
+
+.add-tec{
+    display: flex;
+    flex-direction: column;
+}
+
+tr {
+    opacity: .85 !important;
+}
+
